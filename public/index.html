@@ -1,17 +1,125 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue CRUD App</title>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.5.15/dist/vuetify.min.css" rel="stylesheet">
+    <style>
+        #app {
+            padding: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+</head>
+<body>
+    <div id="app">
+        <v-app>
+            <v-container>
+                <v-card>
+                    <v-card-title>
+                        <h2>Vue CRUD App</h2>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-btn @click="showDialog = true" color="primary">Add New Item</v-btn>
+                        <v-dialog v-model="showDialog" max-width="600px">
+                            <v-card>
+                                <v-card-title>
+                                    <span class="headline">New Item</span>
+                                </v-card-title>
+                                <v-card-text>
+                                    <v-form @submit.prevent="addItem">
+                                        <v-text-field v-model="newItem.name" label="Name"></v-text-field>
+                                        <v-text-field v-model="newItem.description" label="Description"></v-text-field>
+                                        <v-btn type="submit" color="primary">Save</v-btn>
+                                    </v-form>
+                                </v-card-text>
+                            </v-card>
+                        </v-dialog>
+
+                        <v-data-table
+                            :headers="headers"
+                            :items="items"
+                            item-key="id"
+                            @click:row="editItem"
+                        >
+                            <template v-slot:[`item.actions`]="{ item }">
+                                <v-btn color="blue" @click.stop="editItem(item)">Edit</v-btn>
+                                <v-btn color="red" @click.stop="deleteItem(item)">Delete</v-btn>
+                            </template>
+                        </v-data-table>
+                    </v-card-text>
+                </v-card>
+            </v-container>
+        </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.5.15/dist/vuetify.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            data() {
+                return {
+                    showDialog: false,
+                    items: [],
+                    newItem: {
+                        name: '',
+                        description: ''
+                    },
+                    editedItem: {
+                        id: null,
+                        name: '',
+                        description: ''
+                    },
+                    headers: [
+                        { text: 'Name', value: 'name' },
+                        { text: 'Description', value: 'description' },
+                        { text: 'Actions', value: 'actions', sortable: false }
+                    ]
+                };
+            },
+            methods: {
+                addItem() {
+                    if (this.newItem.name && this.newItem.description) {
+                        this.items.push({
+                            id: this.items.length + 1,
+                            name: this.newItem.name,
+                            description: this.newItem.description
+                        });
+                        this.newItem.name = '';
+                        this.newItem.description = '';
+                        this.showDialog = false;
+                    }
+                },
+                editItem(item) {
+                    this.editedItem.id = item.id;
+                    this.editedItem.name = item.name;
+                    this.editedItem.description = item.description;
+                    this.showDialog = true;
+                },
+                saveItem() {
+                    const index = this.items.findIndex(item => item.id === this.editedItem.id);
+                    if (index !== -1) {
+                        this.items[index].name = this.editedItem.name;
+                        this.items[index].description = this.editedItem.description;
+                    }
+                    this.editedItem.id = null;
+                    this.editedItem.name = '';
+                    this.editedItem.description = '';
+                    this.showDialog = false;
+                },
+                deleteItem(item) {
+                    const index = this.items.findIndex(i => i.id === item.id);
+                    if (index !== -1) {
+                        this.items.splice(index, 1);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
 </html>
