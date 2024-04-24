@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="alunos"
-    sort-by="calories"
+    sort-by="nome"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -79,6 +79,12 @@
                       label="CPF"
                     ></v-text-field>
                   </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="4"
+                  >
+                  </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
@@ -130,6 +136,11 @@
         mdi-delete
       </v-icon>
     </template>
+    <template v-slot:[`item.reproved`]="{ item }">
+      <v-checkbox
+        v-model="item.reproved"
+      ></v-checkbox>
+    </template>
     <template v-slot:no-data>
       <v-btn
         color="primary"
@@ -154,6 +165,7 @@
         { text: 'E-mail', value: 'email' },
         { text: 'Número de celular', value: 'phoneNumber', sortable: false  },
         { text: 'CPF', value: 'cpf', },
+        { text: 'Reprovado', value: 'reproved', },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       alunos: [],
@@ -161,14 +173,14 @@
       editedItem: {
         name: '',
         email: '',
-        phoneNumber: 0,
+        phoneNumber: '',
         cpf: '',
       },
       defaultItem: {
-        name: 'N/A',
-        email: 'N/A',
-        phoneNumber: 0,
-        cpf: 'N/A',
+        name: '',
+        email: '',
+        phoneNumber: '',
+        cpf: '',
       },
     }),
 
@@ -199,60 +211,70 @@
             email: 'pedrogabriel123@gmail.com',
             phoneNumber: 912345678,
             cpf: '123.456.789-10',
+            reproved: false,
           },
           {
             name: 'Felipe Sabino',
             email: 'felipesabino123@gmail.com',
             phoneNumber: 987654321,
             cpf: '109.876.543-21',
+            reproved: false,
           },
           {
             name: 'Maria Silva',
             email: 'mariasilva123@gmail.com',
             phoneNumber: 923456789,
             cpf: '234.567.890-11',
+            reproved: false,
           },
           {
             name: 'José Santos',
             email: 'josesantos456@gmail.com',
             phoneNumber: 934567890,
             cpf: '345.678.901-22',
+            reproved: true,
           },
           {
             name: 'Ana Souza',
             email: 'anasouza789@gmail.com',
             phoneNumber: 945678901,
             cpf: '456.789.012-33',
+            reproved: false,
           },
           {
             name: 'Rafael Oliveira',
             email: 'rafaoliveira123@gmail.com',
             phoneNumber: 956789012,
             cpf: '567.890.123-44',
+            reproved: true,
           },
           {
             name: 'Carla Mendes',
             email: 'carlamendes456@gmail.com',
             phoneNumber: 967890123,
             cpf: '678.901.234-55',
+            reproved: true,
           },
           {
             name: 'Lucas Almeida',
             email: 'lucasalmeida789@gmail.com',
             phoneNumber: 978901234,
             cpf: '789.012.345-66',
+            reproved: false,
           },
           {
             name: 'Camila Costa',
             email: 'camilacosta123@gmail.com',
             phoneNumber: 989012345,
             cpf: '890.123.456-77',
+            reproved: false,
           },
           {
             name: 'Rodrigo Santos',
             email: 'rodrigosantos456@gmail.com',
             phoneNumber: 998765432,
             cpf: '901.234.567-88',
+            reproved: true,
           }
         ]
       },
