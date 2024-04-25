@@ -55,7 +55,7 @@
                     md="4"
                   >
                     <v-text-field
-                      v-model="editedItem.Email"
+                      v-model="editedItem.email"
                       label="E-mail"
                     ></v-text-field>
                   </v-col>
