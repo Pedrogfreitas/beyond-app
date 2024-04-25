@@ -188,7 +188,7 @@
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedIndex === -1 ? 'Novo aluno' : 'Editar informações'
       },
     },
 
@@ -314,13 +314,24 @@
         })
       },
 
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.alunos[this.editedIndex], this.editedItem)
-        } else {
-          this.alunos.push(this.editedItem)
+      save() {
+        if (
+          !this.editedItem.name ||
+          !this.editedItem.email ||
+          !this.editedItem.phoneNumber ||
+          !this.editedItem.cpf
+        ) {
+          alert('Por favor, preencha todos os campos obrigatórios.');
+          return;
         }
-        this.close()
+
+        if (this.editedIndex > -1) {
+          Object.assign(this.alunos[this.editedIndex], this.editedItem);
+        } else {
+          this.alunos.push(this.editedItem);
+        }
+
+        this.close();
       },
     },
   }
