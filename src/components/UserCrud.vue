@@ -3,7 +3,7 @@
     :headers="headers"
     :items="alunos"
     sort-by="nome"
-    class="elevation-1"
+    class="elevation"
   >
     <template v-slot:top>
       <v-toolbar
@@ -175,12 +175,14 @@
         email: '',
         phoneNumber: '',
         cpf: '',
+        reproved: false,
       },
       defaultItem: {
         name: '',
         email: '',
         phoneNumber: '',
         cpf: '',
+        reproved: false,
       },
     }),
 

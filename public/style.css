@@ -24,7 +24,7 @@ body {
 }
 
 .container {
-	max-width: 1152px;
+	max-width: 90%;
 	margin: 0 auto;
 	display: flex;
 	justify-content: space-between;
@@ -46,7 +46,7 @@ h1 {
 }
 
 ul.principal {
-	margin: 36px 0 0 0;
+	margin: 6% 0 0 0;
 	padding: 0;
 	list-style: none;
 	font-size: 1.6em;
