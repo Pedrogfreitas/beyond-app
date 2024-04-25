@@ -1,19 +1,19 @@
 <template>
   <v-app>
     <v-main>
-      <HelloWorld/>
+      <UserCrud/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import UserCrud from './components/UserCrud';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    UserCrud,
   },
 
   data: () => ({
