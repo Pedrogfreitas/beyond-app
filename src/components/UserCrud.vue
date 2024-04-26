@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="containerMain">
   <v-data-table
     :headers="headers"
     :items="alunos"
@@ -17,15 +17,15 @@
           vertical
         ></v-divider>
         <v-spacer></v-spacer>
-        <div> <!-- Tentativa de botão -->
+        <div>
           <v-dialog v-model="dialogName" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2 mr-2" v-bind="attrs" v-on="on" flat slot="activator">
-                Apenas nomes
+                Lista Simplificada
               </v-btn>
             </template>
             <v-card>
-              <v-card-title>Nomes de Alunos</v-card-title>
+              <v-card-title>Alunos</v-card-title>
               <v-card-text>
                 <v-container>
                   <div v-if="alunos.length > 0">
@@ -45,7 +45,7 @@
               </v-card-text>
             </v-card>
           </v-dialog>
-        </div> <!-- Fim da tentativa de botão -->
+        </div>
         <v-dialog
           v-model="dialog"
           max-width="500px"
@@ -326,18 +326,56 @@
 </script>
 
 <style>
-.alunos {
-  width: 90vh;
-  border: 1px #401580;
-  border-radius: 1rem;
-  margin-top: 32px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
-  margin-left: 25vh;
-  text-decoration: none;
-  color: #401580;
-  margin-bottom: 12px;
-  font-size: 1.5rem;
+.containerMain {
+    background-color: #401580;
+    border-radius: 1em;
+    padding: 2em;
+    margin: 5%;
+    margin-top: 3%;
 }
 
+.header {
+    background-color: #401580;
+    padding: 1em 0;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'arial';
+	font-size: 62.5%;
+}
+
+body.infoBody{
+  font-size:larger
+}
+
+.container {
+	max-width: 90%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+img{
+    max-width: 30%;
+}
+
+header {
+	background: #401580;
+	padding: 1em 0;
+}
+
+h1 {
+	margin: 0;
+	padding: 0;
+}
+
+ul.principal {
+	margin: 3% 0 0 0;
+	padding: 0;
+	list-style: none;
+	font-size: 1.6em;
+}
 
 </style>
