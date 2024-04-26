@@ -1,4 +1,5 @@
 <template>
+  <div>
   <v-data-table
     :headers="headers"
     :items="alunos"
@@ -16,6 +17,35 @@
           vertical
         ></v-divider>
         <v-spacer></v-spacer>
+        <div> <!-- Tentativa de botão -->
+          <v-dialog v-model="dialogName" max-width="500px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark class="mb-2 mr-2" v-bind="attrs" v-on="on" flat slot="activator">
+                Apenas nomes
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>Nomes de Alunos</v-card-title>
+              <v-card-text>
+                <v-container>
+                  <div v-if="alunos.length > 0">
+                    <ul>
+                      <li v-for="(aluno, index) in alunos" :key="index">
+                        <p>{{ aluno.name }}
+                        <span v-if="aluno.reproved" style="color: red"> (Reprovado)</span>
+                        <span v-else style="color: green"> (Aprovado)</span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                  <div v-else>
+                    <p>Nenhum aluno encontrado.</p>
+                  </div>
+                </v-container>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+        </div> <!-- Fim da tentativa de botão -->
         <v-dialog
           v-model="dialog"
           max-width="500px"
@@ -135,15 +165,8 @@
         v-model="item.reproved"
       ></v-checkbox>
     </template>
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
   </v-data-table>
+</div>
 </template>
 <script>
   export default {
@@ -162,7 +185,57 @@
         { text: 'Reprovado', value: 'reproved', },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
-      alunos: [],
+      alunos: [
+      {
+        name: 'Pedro Gabriel',
+        email: 'pedrogabriel123@gmail.com',
+        phoneNumber: 912345678,
+        cpf: '123.456.789-10',
+        reproved: false,
+      },
+      {
+        name: 'Felipe Sabino',
+        email: 'felipesabino123@gmail.com',
+        phoneNumber: 987654321,
+        cpf: '109.876.543-21',
+        reproved: false,
+      },
+      {
+        name: 'Ana Souza',
+        email: 'anasouza789@gmail.com',
+        phoneNumber: 945678901,
+        cpf: '456.789.012-33',
+        reproved: false,
+      },
+      {
+        name: 'Rafael Oliveira',
+        email: 'rafaoliveira123@gmail.com',
+        phoneNumber: 956789012,
+        cpf: '567.890.123-44',
+        reproved: true,
+      },
+      {
+        name: 'Carla Mendes',
+        email: 'carlamendes456@gmail.com',
+        phoneNumber: 967890123,
+        cpf: '678.901.234-55',
+        reproved: true,
+      },
+      {
+        name: 'Lucas Almeida',
+        email: 'lucasalmeida789@gmail.com',
+        phoneNumber: 978901234,
+        cpf: '789.012.345-66',
+        reproved: false,
+      },
+      {
+        name: 'Rodrigo Santos',
+        email: 'rodrigosantos456@gmail.com',
+        phoneNumber: 998765432,
+        cpf: '901.234.567-88',
+        reproved: true,
+      }
+      ],
       editedIndex: -1,
       editedItem: {
         name: '',
@@ -195,86 +268,7 @@
       },
     },
 
-    created () {
-      this.initialize()
-    },
-
     methods: {
-      initialize () {
-        this.alunos = [
-          {
-            name: 'Pedro Gabriel',
-            email: 'pedrogabriel123@gmail.com',
-            phoneNumber: 912345678,
-            cpf: '123.456.789-10',
-            reproved: false,
-          },
-          {
-            name: 'Felipe Sabino',
-            email: 'felipesabino123@gmail.com',
-            phoneNumber: 987654321,
-            cpf: '109.876.543-21',
-            reproved: false,
-          },
-          {
-            name: 'Maria Silva',
-            email: 'mariasilva123@gmail.com',
-            phoneNumber: 923456789,
-            cpf: '234.567.890-11',
-            reproved: false,
-          },
-          {
-            name: 'José Santos',
-            email: 'josesantos456@gmail.com',
-            phoneNumber: 934567890,
-            cpf: '345.678.901-22',
-            reproved: true,
-          },
-          {
-            name: 'Ana Souza',
-            email: 'anasouza789@gmail.com',
-            phoneNumber: 945678901,
-            cpf: '456.789.012-33',
-            reproved: false,
-          },
-          {
-            name: 'Rafael Oliveira',
-            email: 'rafaoliveira123@gmail.com',
-            phoneNumber: 956789012,
-            cpf: '567.890.123-44',
-            reproved: true,
-          },
-          {
-            name: 'Carla Mendes',
-            email: 'carlamendes456@gmail.com',
-            phoneNumber: 967890123,
-            cpf: '678.901.234-55',
-            reproved: true,
-          },
-          {
-            name: 'Lucas Almeida',
-            email: 'lucasalmeida789@gmail.com',
-            phoneNumber: 978901234,
-            cpf: '789.012.345-66',
-            reproved: false,
-          },
-          {
-            name: 'Camila Costa',
-            email: 'camilacosta123@gmail.com',
-            phoneNumber: 989012345,
-            cpf: '890.123.456-77',
-            reproved: false,
-          },
-          {
-            name: 'Rodrigo Santos',
-            email: 'rodrigosantos456@gmail.com',
-            phoneNumber: 998765432,
-            cpf: '901.234.567-88',
-            reproved: true,
-          }
-        ]
-      },
-
       editItem (item) {
         this.editedIndex = this.alunos.indexOf(item)
         this.editedItem = Object.assign({}, item)
@@ -330,3 +324,20 @@
     },
   }
 </script>
+
+<style>
+.alunos {
+  width: 90vh;
+  border: 1px #401580;
+  border-radius: 1rem;
+  margin-top: 32px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+  margin-left: 25vh;
+  text-decoration: none;
+  color: #401580;
+  margin-bottom: 12px;
+  font-size: 1.5rem;
+}
+
+
+</style>
