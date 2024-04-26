@@ -79,12 +79,6 @@
                       label="CPF"
                     ></v-text-field>
                   </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="4"
-                  >
-                  </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
@@ -96,14 +90,14 @@
                 text
                 @click="close"
               >
-                Cancel
+                Cancelar
               </v-btn>
               <v-btn
                 color="blue darken-1"
                 text
                 @click="save"
               >
-                Save
+                Salvar
               </v-btn>
             </v-card-actions>
           </v-card>
