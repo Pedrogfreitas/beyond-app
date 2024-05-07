@@ -10,6 +10,14 @@ import UserCrud from '@/components/UserCrud.vue'
 Vue.use(VueRouter)
 
 const routes = [
+    // {
+    //     path: '/',
+    //     redirect: '/users'
+    // },
+    // {
+    //     path: '*',
+    //     redirect: '/users'
+    // },
     {
         path:'/Users',
         component: UserCrud
