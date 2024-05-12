@@ -17,7 +17,7 @@
         <v-card-text>
             <v-text-field
             color="white"
-            label="Nome completo"
+            label="Email"
             ></v-text-field>
             <v-text-field
             color="white"
@@ -26,13 +26,14 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn color="purple darken-2">
+          <v-btn color="purple darken-2"
+          @click="createAcc">
             Registrar
           </v-btn>
             <v-spacer></v-spacer>
             <v-btn
             color="purple darken-2"
-            @click="save"
+            @click="login"
             >
             Logar
             </v-btn>
@@ -53,24 +54,22 @@
   export default {
     data () {
       return {
-        hasSaved: false,
-        model: null,
-        logged: false,
+        email: "",
+        password: "",
       }
     },
-
     methods: {
-      customFilter (item, queryText) {
-        const textOne = item.name.toLowerCase()
-        const textTwo = item.abbr.toLowerCase()
-        const searchText = queryText.toLowerCase()
-
-        return textOne.indexOf(searchText) > -1 ||
-          textTwo.indexOf(searchText) > -1
+      login() {
+        this.$store.dispatch("login", {
+          email: this.email,
+          password: this.password,
+        });
       },
-      save () {
-        this.hasSaved = true
-        this.logged = true
+      createAcc() {
+        this.$store.dispatch("create", {
+          email: this.email,
+          password: this.password,
+        });
       },
     },
   }
