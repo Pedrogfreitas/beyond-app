@@ -5,22 +5,28 @@ import Biblioteca from '@/pages/Biblioteca.vue'
 import Calendario from '@/pages/Calendario.vue'
 import Cursos from '@/pages/Cursos.vue'
 import Forum from '@/pages/Forum.vue'
-import UserCrud from '@/components/UserCrud.vue'
+import Users from '@/pages/Users'
+import Login from '@/pages/Login'
+import Home from '@/pages/Home'
 
 Vue.use(VueRouter)
 
 const routes = [
-    // {
-    //     path: '/',
-    //     redirect: '/users'
-    // },
-    // {
-    //     path: '*',
-    //     redirect: '/users'
-    // },
+    {
+        path: '/',
+        redirect: '/Login'
+    },
+    {
+        path: '/Home',
+        component: Home
+    },
+    {
+        path: '*',
+        redirect: '/Home'
+    },
     {
         path:'/Users',
-        component: UserCrud
+        component: Users
     },
     {
         path:'/Forum',
@@ -37,6 +43,10 @@ const routes = [
     {
         path:'/Biblioteca',
         component: Biblioteca
+    },
+    {
+        path:'/Login',
+        component: Login
     },
 ]
 

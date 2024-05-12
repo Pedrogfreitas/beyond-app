@@ -1,17 +1,17 @@
 <template>
     <v-main>
-      <UserCrud/>
+      <UserLogin/>
     </v-main>
 </template>
 
 <script>
-import UserCrud from '@/components/UserCrud';
+import UserLogin from '@/components/UserLogin';
 
 export default {
   name: 'App',
 
   components: {
-    UserCrud,
+    UserLogin,
   },
 
   data: () => ({
