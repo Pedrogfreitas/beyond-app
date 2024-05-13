@@ -18,10 +18,12 @@
             <v-text-field
             color="white"
             label="Email"
+            v-model="email"
             ></v-text-field>
             <v-text-field
             color="white"
             label="Senha"
+            v-model="password"
             ></v-text-field>
         </v-card-text>
         <v-divider></v-divider>
@@ -39,7 +41,6 @@
             </v-btn>
         </v-card-actions>
         <v-snackbar
-            v-model="hasSaved"
             :timeout="2000"
             absolute
             bottom
@@ -72,7 +73,7 @@
         });
       },
     },
-  }
+  };
 </script>
 
 <style>

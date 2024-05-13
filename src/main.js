@@ -7,18 +7,16 @@ import { auth } from '@/config/firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 
-Vue.config.productionTip = false
-
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    user: null
+    user: null,
   },
   mutations: {
     setUser(state, payload) {
-      state.user = payload
-    }
+      state.user = payload;
+    },
   },
   actions: {
     // eslint-disable-next-line no-unused-vars
@@ -48,6 +46,8 @@ const store = new Vuex.Store({
     }
   }
 })
+
+Vue.config.productionTip = false
 
 new Vue({
   vuetify,
