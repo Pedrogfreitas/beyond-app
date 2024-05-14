@@ -18,3 +18,13 @@
       </div>
     </header>
 </template>
+
+<script>
+export default {
+  methods: {
+    goTo(path) {
+        this.$router.push(path).catch(()=>{});
+      }
+    }
+}
+</script>
