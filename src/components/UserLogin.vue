@@ -40,14 +40,6 @@
             Logar
             </v-btn>
         </v-card-actions>
-        <v-snackbar
-            :timeout="2000"
-            absolute
-            bottom
-            left
-        >
-            Logged sucessfully
-        </v-snackbar>
         </v-card>
     </div>
   </template>

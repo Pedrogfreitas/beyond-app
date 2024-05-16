@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
 import Biblioteca from '@/pages/Biblioteca.vue'
 import Calendario from '@/pages/Calendario.vue'
 import Cursos from '@/pages/Cursos.vue'
