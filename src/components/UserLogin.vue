@@ -43,7 +43,11 @@
         </v-card>
     </div>
   </template>
+
   <script>
+  import { onAuthStateChanged } from 'firebase/auth';
+  import { auth } from '@/config/firebase';
+
   export default {
     data () {
       return {
@@ -56,6 +60,11 @@
         this.$store.dispatch("login", {
           email: this.email,
           password: this.password,
+        });
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            this.$router.push('/home');
+          }
         });
       },
       createAcc() {

@@ -7,17 +7,21 @@ import Forum from '@/pages/Forum.vue'
 import Users from '@/pages/Users'
 import Login from '@/pages/Login'
 import Home from '@/pages/Home'
+import { auth } from '@/config/firebase'
 
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: '/',
-        redirect: '/Login'
+        redirect: '/Home'
     },
     {
         path: '/Home',
-        component: Home
+        component: Home,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '*',
@@ -25,23 +29,38 @@ const routes = [
     },
     {
         path:'/Users',
-        component: Users
+        component: Users,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path:'/Forum',
-        component: Forum
+        component: Forum,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path:'/Calendario',
-        component: Calendario
+        component: Calendario,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path:'/Cursos',
-        component: Cursos
+        component: Cursos,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path:'/Biblioteca',
-        component: Biblioteca
+        component: Biblioteca,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path:'/Login',
@@ -51,6 +70,21 @@ const routes = [
 
 const router = new VueRouter({
     routes
+})
+
+    // eslint-disable-next-line no-unused-vars
+const signOut = () => {
+    auth.currentUser = null;
+};
+
+router.beforeEach((to, from, next) => {
+    const requiresAuth= to.matched.some(record => record.meta.requiresAuth);
+    console.log('currentUser', auth.currentUser);
+    if (requiresAuth && !auth.currentUser) {
+        next('/login');
+    } else {
+        next();
+    }
 })
 
 export default router
