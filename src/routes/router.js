@@ -69,11 +69,6 @@ const router = new VueRouter({
     routes
 })
 
-    // eslint-disable-next-line no-unused-vars
-const signOut = () => {
-    auth.currentUser = null;
-};
-
 router.beforeEach((to, from, next) => {
     const requiresAuth= to.matched.some(record => record.meta.requiresAuth);
     console.log('currentUser', auth.currentUser);

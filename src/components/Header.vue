@@ -23,13 +23,13 @@
       temporary
       right
     >
-    <v-list-item>
+      <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6">
-            Application
+            {{ user ? user.email : "Application" }}
           </v-list-item-title>
-          <v-list-item-subtitle>
-            subtext
+          <v-list-item-subtitle @click="signOut" style="cursor: pointer; color: blue;">
+            Sign Out
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -58,10 +58,13 @@
 </template>
 
 <script>
+import { auth } from '@/config/firebase'
+
 export default {
   data() {
     return {
       sidebar: false,
+      user: null,
     };
   },
   methods: {
@@ -71,6 +74,19 @@ export default {
     toggleSidebar() {
       this.sidebar = !this.sidebar;
     },
+    signOut() {
+      auth.signOut().then(() => {
+        this.user = null;
+        this.$router.push('/login');
+      }).catch((error) => {
+        console.error("Sign out error:", error);
+      });
+    },
+  },
+  mounted() {
+    auth.onAuthStateChanged((user) => {
+      this.user = user;
+    });
   },
 };
 </script>
