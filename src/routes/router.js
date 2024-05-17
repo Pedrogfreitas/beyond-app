@@ -19,9 +19,6 @@ const routes = [
     {
         path: '/Home',
         component: Home,
-        meta: {
-            requiresAuth: true
-        }
     },
     {
         path: '*',
