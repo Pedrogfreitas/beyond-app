@@ -26,7 +26,7 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6">
-            {{ user ? user.email : "Application" }}
+            {{ user ? user.email : "Guest" }}
           </v-list-item-title>
           <v-list-item-subtitle @click="signOut" style="cursor: pointer; color: blue;">
             Sign Out
