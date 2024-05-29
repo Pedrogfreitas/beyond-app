@@ -5,6 +5,7 @@
     :items="alunos"
     sort-by="nome"
     class="elevation"
+    :loading="loading"
   >
     <template v-slot:top>
       <v-toolbar
@@ -169,6 +170,15 @@
 </div>
 </template>
 <script>
+import { collection,
+         getDocs, 
+         addDoc, 
+         updateDoc, 
+         deleteDoc, 
+         doc, 
+        } from "firebase/firestore";
+import { db } from '@/config/firebase';
+
   export default {
     data: () => ({
       dialog: false,
@@ -186,55 +196,6 @@
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       alunos: [
-      {
-        name: 'Pedro Gabriel',
-        email: 'pedrogabriel123@gmail.com',
-        phoneNumber: 912345678,
-        cpf: '123.456.789-10',
-        reproved: false,
-      },
-      {
-        name: 'Felipe Sabino',
-        email: 'felipesabino123@gmail.com',
-        phoneNumber: 987654321,
-        cpf: '109.876.543-21',
-        reproved: false,
-      },
-      {
-        name: 'Ana Souza',
-        email: 'anasouza789@gmail.com',
-        phoneNumber: 945678901,
-        cpf: '456.789.012-33',
-        reproved: false,
-      },
-      {
-        name: 'Rafael Oliveira',
-        email: 'rafaoliveira123@gmail.com',
-        phoneNumber: 956789012,
-        cpf: '567.890.123-44',
-        reproved: true,
-      },
-      {
-        name: 'Carla Mendes',
-        email: 'carlamendes456@gmail.com',
-        phoneNumber: 967890123,
-        cpf: '678.901.234-55',
-        reproved: true,
-      },
-      {
-        name: 'Lucas Almeida',
-        email: 'lucasalmeida789@gmail.com',
-        phoneNumber: 978901234,
-        cpf: '789.012.345-66',
-        reproved: false,
-      },
-      {
-        name: 'Rodrigo Santos',
-        email: 'rodrigosantos456@gmail.com',
-        phoneNumber: 998765432,
-        cpf: '901.234.567-88',
-        reproved: true,
-      }
       ],
       editedIndex: -1,
       editedItem: {
@@ -268,7 +229,25 @@
       },
     },
 
+    created () {
+      this.initialize()
+    },
+
     methods: {
+      initialize () {
+        this.getDocsFromFirestore()
+      },
+      async getDocsFromFirestore() {
+        this.loading = true
+        this.alunos = []
+        const querySnapshot = await getDocs(collection(db, "alunos"));
+        querySnapshot.forEach((doc) => {
+          const data = { id: doc.id, ...doc.data() };
+          this.alunos.push(data);
+        });
+        this.loading = false
+      },
+
       editItem (item) {
         this.editedIndex = this.alunos.indexOf(item)
         this.editedItem = Object.assign({}, item)
@@ -281,8 +260,10 @@
         this.dialogDelete = true
       },
 
-      deleteItemConfirm () {
-        this.alunos.splice(this.editedIndex, 1)
+      async deleteItemConfirm () {
+        // this.alunos.splice(this.editedIndex, 1)
+        await deleteDoc(doc(db, 'alunos', this.editedItem.id));
+        this.getDocsFromFirestore();
         this.closeDelete()
       },
 
@@ -302,7 +283,7 @@
         })
       },
 
-      save() {
+      async save() {
         if (
           !this.editedItem.name ||
           !this.editedItem.email ||
@@ -314,9 +295,17 @@
         }
 
         if (this.editedIndex > -1) {
-          Object.assign(this.alunos[this.editedIndex], this.editedItem);
+          await updateDoc(
+            doc(db, 'alunos', this.editedItem.id),
+             this.editedItem
+            );
+          this.getDocsFromFirestore();
+
+          // Object.assign(this.alunos[this.editedIndex], this.editedItem);
         } else {
-          this.alunos.push(this.editedItem);
+          await addDoc(collection(db, 'alunos'), this.editedItem);
+          this.getDocsFromFirestore();
+          // this.alunos.push(this.editedItem);
         }
 
         this.close();
