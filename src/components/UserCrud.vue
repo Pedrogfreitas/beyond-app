@@ -262,7 +262,6 @@ import { db } from '@/config/firebase';
       },
 
       async deleteItemConfirm () {
-        // this.alunos.splice(this.editedIndex, 1)
         await deleteDoc(doc(db, 'alunos', this.editedItem.id));
         this.getDocsFromFirestore();
         this.closeDelete()
@@ -302,11 +301,9 @@ import { db } from '@/config/firebase';
             );
           this.getDocsFromFirestore();
 
-          // Object.assign(this.alunos[this.editedIndex], this.editedItem);
         } else {
           await addDoc(collection(db, 'alunos'), this.editedItem);
           this.getDocsFromFirestore();
-          // this.alunos.push(this.edi,tedItem);
         }
         this.close();
       },
