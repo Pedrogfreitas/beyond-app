@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <v-main class="mainBackground">
     <UserLogin/>
   </v-main>
 </template>
@@ -19,3 +19,12 @@ export default {
   }),
 };
 </script>
+
+<style>
+.mainBackground {
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh; 
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <v-main class="mainBackground">
     <Header/>
     <UserCrud/>
   </v-main>
