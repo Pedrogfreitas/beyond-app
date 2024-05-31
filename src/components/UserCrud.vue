@@ -164,6 +164,7 @@
     <template v-slot:[`item.reproved`]="{ item }">
       <v-checkbox
         v-model="item.reproved"
+        @change="saveReproved(item)"
       ></v-checkbox>
     </template>
   </v-data-table>
@@ -305,11 +306,23 @@ import { db } from '@/config/firebase';
         } else {
           await addDoc(collection(db, 'alunos'), this.editedItem);
           this.getDocsFromFirestore();
-          // this.alunos.push(this.editedItem);
+          // this.alunos.push(this.edi,tedItem);
         }
-
         this.close();
       },
+
+      async saveReproved(item) {
+        try {
+          await updateDoc(
+            doc(db, 'alunos', item.id),
+            { reproved: item.reproved }
+          );
+          console.log('Status de reprovação atualizado com sucesso!');
+        } catch (error) {
+          console.error('Erro ao atualizar status de reprovação:', error);
+        }
+      },
+
     },
   }
 </script>
