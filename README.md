@@ -34,3 +34,10 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Links do deploy
+```
+Project Console: https://console.firebase.google.com/project/beyond-app-80c16/overview
+Hosting URL: https://beyond-app-80c16.web.app
+```
